@@ -41,14 +41,29 @@ int main()
     {
         /* The code snippet you provided is checking for keyboard input to move the text and circle on
         the window. Here's what each line does: */
-        if (IsKeyDown(KEY_RIGHT)) PositionOnScreen.x += speed.x*vectorotatex;
-        if (IsKeyDown(KEY_LEFT)) PositionOnScreen.x -= speed.x*vectorotatex;
-        if (IsKeyDown(KEY_UP)) PositionOnScreen.y -= speed.y*vectorotatey;
-        if (IsKeyDown(KEY_DOWN)) PositionOnScreen.y += speed.y*vectorotatey;
-
+        if (IsKeyDown(KEY_RIGHT)) 
+        {
+            PositionOnScreen.x += speed.x*vectorotatex;
+        }
+        if (IsKeyDown(KEY_LEFT)) 
+        {
+            PositionOnScreen.x -= speed.x*vectorotatex;
+        }
+        
+        if (IsKeyDown(KEY_UP)) 
+        {
+            PositionOnScreen.y -= speed.y*vectorotatey;
+        }
+        if (IsKeyDown(KEY_DOWN)) 
+        {   
+            PositionOnScreen.y += speed.y*vectorotatey;
+        }
+        
+        
         /* The lines `PositionOnScreen.x += speed.x;` and `PositionOnScreen.y += speed.y;` are updating
         the position of the text and circle on the window by adding the values of `speed.x` and
         `speed.y` to the current x and y coordinates of `PositionOnScreen` respectively. */
+
         PositionOnScreen.x += speed.x;
         PositionOnScreen.y += speed.y;
         
@@ -64,6 +79,7 @@ int main()
         creating a new `Vector2` variable named `Endline` and initializing it with the x and y
         coordinates of the `PositionOnScreen` vector. */
         Vector2 Endline = {(PositionOnScreen.x),(PositionOnScreen.y)};
+
         Endline.x += 100*vectorotatex;
         Endline.y += 100*vectorotatey;
         
