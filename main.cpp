@@ -41,10 +41,10 @@ int main()
     {
         /* The code snippet you provided is checking for keyboard input to move the text and circle on
         the window. Here's what each line does: */
-        if (IsKeyDown(KEY_RIGHT)) PositionOnScreen.x += speed.x;
-        if (IsKeyDown(KEY_LEFT)) PositionOnScreen.x -= speed.x;
-        if (IsKeyDown(KEY_UP)) PositionOnScreen.y -= speed.y;
-        if (IsKeyDown(KEY_DOWN)) PositionOnScreen.y += speed.y;
+        if (IsKeyDown(KEY_RIGHT)) PositionOnScreen.x += speed.x*vectorotatex;
+        if (IsKeyDown(KEY_LEFT)) PositionOnScreen.x -= speed.x*vectorotatex;
+        if (IsKeyDown(KEY_UP)) PositionOnScreen.y -= speed.y*vectorotatey;
+        if (IsKeyDown(KEY_DOWN)) PositionOnScreen.y += speed.y*vectorotatey;
 
         /* The lines `PositionOnScreen.x += speed.x;` and `PositionOnScreen.y += speed.y;` are updating
         the position of the text and circle on the window by adding the values of `speed.x` and
@@ -70,9 +70,9 @@ int main()
         //ball still go no rotation
 
         BeginDrawing();
-            ClearBackground(RAYWHITE);
+            ClearBackground(BLACK);
             DrawLineV(PositionOnScreen,Endline,RED);
-            DrawCircleV(PositionOnScreen,radiant,BLACK);
+            DrawCircleV(PositionOnScreen,radiant,WHITE);
         EndDrawing();
     }
     //a
