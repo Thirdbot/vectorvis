@@ -15,7 +15,7 @@ contains two integer variables `x` and `y`. */
 //it state is moving at random direction(x,y) when it see pray it take control of direction
 /*
 LEFT TO DO:
-Make ai (basic tracking and destroy system)
+mouse drag
 */
 class Bot
 {
@@ -225,9 +225,9 @@ int main()
     Bot bothold;
     bot1.setname("Steve");
     bot1.setradiant(10);
-    bot1.setspeed(6,5);
+    bot1.setspeed(50,50);
 
-    bot2.setradiant(10);
+    bot2.setradiant(50);
     bot2.setname("Alex");
     bot2.setspeed(5,5);
     
@@ -251,9 +251,9 @@ int main()
         
         
         bot1.process();
-        bot1.brain(bot2);
         bot2.process();
         bot2.brain(bot1);
+        bot1.brain(bot2);
 
         bot1.updatecollisP();
         bot2.updatecollisP();
