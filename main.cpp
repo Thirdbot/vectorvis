@@ -10,34 +10,59 @@ using namespace std;
 
 /* The code snippet `struct Vel { int x; int y; } speed;` is defining a structure named `Vel` that
 contains two integer variables `x` and `y`. */
-struct Vel
-{
-    int x;
-    int y;
-}speed;
 
-int main()
+//it state is moving at random direction(x,y) when it see pray it take control of direction
+class Bot
 {
-    /* The lines `speed.x = 10;` and `speed.y = 10;` are initializing the values of the `x` and `y`
-    members of the `speed` struct to 10 each. This means that the initial speed of the moving circle
-    in the program is set to 10 pixels per frame in both the horizontal (x) and vertical (y)
-    directions. */
-    speed.x = 10;
-    speed.y = 10;
-    int vectorotatex = 1;
-    int vectorotatey = 1;
+    public:
+    
+    string bname;
     int width = 800;
     int height = 540;
-    Vector2 PositionOnScreen = {(float)width/2,(float)height/2};
-    
+
+    struct Vel
+    {
+        int x=10;
+        int y=10;
+    }speed;
+
     int radiant = 50;
+    int vectorotatex = 1;
+    int vectorotatey = 1;
+    //random in screen
+    float posxrandom = rand()%width+1;
+    float posyrandom = rand()%height+1;
 
-    InitWindow(width,height,"Window");
-    SetTargetFPS(60);
-
-    char* const text = "Congrats you are new here";
-
-    while (!WindowShouldClose())
+    Vector2 PositionOnScreen = {posxrandom,posyrandom};
+    Vector2 Lastine;
+    void setname(string name)
+    {
+        bname = name;
+    }
+    void setpos(int x,int y)
+    {
+        posxrandom = x;
+        posyrandom = y;
+    }
+    void setradiant(int rad)
+    {
+        radiant = rad;
+    }
+    void setspeed(int x ,int y )
+    {
+        speed.x = x;
+        speed.y = y;
+    }
+    void draw()
+    {  
+        cout << "Name:" << bname << "\tPosX:" << PositionOnScreen.x << "\tPosY:" << PositionOnScreen.y << endl;
+        BeginDrawing();
+            ClearBackground(BLACK);
+            DrawLineV(PositionOnScreen,Lastine,RED);
+            DrawCircleV(PositionOnScreen,radiant,WHITE);
+        EndDrawing();
+    }
+    void process()
     {
         /* The code snippet you provided is checking for keyboard input to move the text and circle on
         the window. Here's what each line does: */
@@ -82,16 +107,48 @@ int main()
 
         Endline.x += 100*vectorotatex;
         Endline.y += 100*vectorotatey;
-        
-        //ball still go no rotation
 
-        BeginDrawing();
-            ClearBackground(BLACK);
-            DrawLineV(PositionOnScreen,Endline,RED);
-            DrawCircleV(PositionOnScreen,radiant,WHITE);
-        EndDrawing();
-    }
+        Lastine = Endline;
+        }
     //a
+    
+};
+
+int main()
+{
+    /* The lines `speed.x = 10;` and `speed.y = 10;` are initializing the values of the `x` and `y`
+    members of the `speed` struct to 10 each. This means that the initial speed of the moving circle
+    in the program is set to 10 pixels per frame in both the horizontal (x) and vertical (y)
+    directions. */
+    
+    
+    int width = 800;
+    int height = 540;
+    InitWindow(width,height,"Window");
+    SetConfigFlags(FLAG_VSYNC_HINT);
+    SetTargetFPS(60);
+
+    Bot bot1;
+    Bot bot2;
+    bot1.setname("Steve");
+    bot1.setradiant(60);
+    bot1.setspeed(5,5);
+
+    bot2.setname("Alex");
+    bot2.setspeed(20,20);
+
+    while (!WindowShouldClose())
+    {
+        bot1.process();
+        bot2.process();
+        bot1.draw();
+        bot2.draw();
+    }
     CloseWindow();
+    
+
+    
+    
+    
     return 0;
 }
