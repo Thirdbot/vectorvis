@@ -6,16 +6,26 @@
 #include <raylib.h>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 /* The code snippet `struct Vel { int x; int y; } speed;` is defining a structure named `Vel` that
 contains two integer variables `x` and `y`. */
 
 //it state is moving at random direction(x,y) when it see pray it take control of direction
+/*
+LEFT TO DO:
+Make ai (basic tracking and destroy system)
+*/
 class Bot
 {
     public:
-    
+    struct Circle
+    {
+        Vector2 center;
+        int radiant;
+    };
+    Circle collision;
     string bname;
     int width = 800;
     int height = 540;
@@ -35,6 +45,82 @@ class Bot
 
     Vector2 PositionOnScreen = {posxrandom,posyrandom};
     Vector2 Lastine;
+
+    void brain(Bot& otherBot)
+    {
+        Vector2 needposxy;
+        needposxy.x = otherBot.PositionOnScreen.x/PositionOnScreen.x;
+        needposxy.y = otherBot.PositionOnScreen.y/PositionOnScreen.y;
+        if (needposxy.x <= 1)
+        {
+            //speed.x -= needposxy.x
+            //PositionOnScreen.x += speed.x*vectorotatex;
+
+            //PositionOnScreen.x -= speed.x*vectorotatex;
+            speed.x -= needposxy.x;
+            //PositionOnScreen.x += speed.x*vectorotatex; 
+
+
+
+            //make it wait
+            //speed.x -= needposxy.x;
+            //PositionOnScreen.x += speed.x*vectorotatex; 
+
+
+
+
+            //vectorotatex = vectorotatex*-1;
+        }
+        else
+        {
+            speed.x += needposxy.x;
+            //PositionOnScreen.x += speed.x*vectorotatex;
+        }
+        if (needposxy.y <= 1)
+        {
+            speed.y -= needposxy.y;
+            //PositionOnScreen.y -= speed.y*vectorotatey;
+            //vectorotatey = vectorotatey*-1;
+        }
+        else
+        {
+            speed.y += needposxy.y;
+            //PositionOnScreen.y += speed.y*vectorotatey;
+        }
+    }
+    //chat help
+    void updatecollisP()
+    {
+       collision.center = PositionOnScreen;
+       collision.radiant = radiant;
+    }
+
+    //chat help
+    bool checkcollis(Bot& otherbot)
+    {
+        return CheckCollisionCircles(collision.center,collision.radiant,otherbot.collision.center,otherbot.collision.radiant);
+    }
+
+    void collisdone(Bot bot2)
+    {
+        if (checkcollis(bot2))
+        {
+            speed.x = -1*speed.x;
+            speed.y = -1*speed.y;
+            PositionOnScreen.x += speed.x;
+            PositionOnScreen.y += speed.y;
+            vectorotatex = -1*vectorotatex;
+            vectorotatey = -1*vectorotatey;
+
+            bot2.speed.x = -1*bot2.speed.x;
+            bot2.speed.y = -1*bot2.speed.y;
+            bot2.PositionOnScreen.x += bot2.speed.x;
+            bot2.PositionOnScreen.y += bot2.speed.y;
+            bot2.vectorotatex = -1*bot2.vectorotatex;
+            bot2.vectorotatey = -1*bot2.vectorotatey;
+            
+        }
+    }
     void setname(string name)
     {
         bname = name;
@@ -53,14 +139,13 @@ class Bot
         speed.x = x;
         speed.y = y;
     }
+    //this here why it flickering
     void draw()
     {  
         cout << "Name:" << bname << "\tPosX:" << PositionOnScreen.x << "\tPosY:" << PositionOnScreen.y << endl;
-        BeginDrawing();
-            ClearBackground(BLACK);
-            DrawLineV(PositionOnScreen,Lastine,RED);
-            DrawCircleV(PositionOnScreen,radiant,WHITE);
-        EndDrawing();
+        ClearBackground(BLACK);
+        DrawLineV(PositionOnScreen,Lastine,RED);
+        DrawCircleV(PositionOnScreen,radiant,WHITE);
     }
     void process()
     {
@@ -128,27 +213,62 @@ int main()
     SetConfigFlags(FLAG_VSYNC_HINT);
     SetTargetFPS(60);
 
+    const int max_bot = 2;
+    Bot botlist[max_bot];
+
+    BeginDrawing();
+    ClearBackground(BLACK);
+    
+    
     Bot bot1;
     Bot bot2;
+    Bot bothold;
     bot1.setname("Steve");
-    bot1.setradiant(60);
-    bot1.setspeed(5,5);
+    bot1.setradiant(10);
+    bot1.setspeed(6,5);
 
+    bot2.setradiant(10);
     bot2.setname("Alex");
-    bot2.setspeed(20,20);
-
+    bot2.setspeed(5,5);
+    
+    
     while (!WindowShouldClose())
     {
+        /*
+        for (int i=0;i<max_bot;i++)
+    {
+        string name = "kai";
+        botlist[i].setspeed(1,1);
+        botlist[i].setname(name);
+        botlist[i].process();
+        botlist[i].brain(botlist[i]);
+        botlist[i].updatecollisP();
+        botlist[i].collisdone(botlist[i],botlist[0]);
+        botlist[i].draw();
+    }
+    EndDrawing();
+        */
+        
+        
         bot1.process();
+        bot1.brain(bot2);
         bot2.process();
+        bot2.brain(bot1);
+
+        bot1.updatecollisP();
+        bot2.updatecollisP();
+        bot1.collisdone(bot2);
+        bot2.collisdone(bot1);
+        
+        BeginDrawing();
+        ClearBackground(BLACK);
         bot1.draw();
         bot2.draw();
+        EndDrawing();
+        
+        
     }
     CloseWindow();
-    
 
-    
-    
-    
     return 0;
 }
