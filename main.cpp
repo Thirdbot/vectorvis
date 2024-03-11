@@ -229,16 +229,6 @@ int main()
     bot2.setradiant(10);
     bot2.setname("2");
     bot2.setspeed(5,5);
-
-    Bot bot3;
-    Bot bot4;
-    bot1.setname("3");
-    bot1.setradiant(10);
-    bot1.setspeed(5,5);
-
-    bot2.setradiant(10);
-    bot2.setname("4");
-    bot2.setspeed(5,5);
     
     
     
@@ -264,51 +254,21 @@ int main()
         
         bot1.process();
         bot2.process();
-        bot2.brain(bot1);
-        bot2.brain(bot3);
-        bot2.brain(bot4);
 
-        bot1.brain(bot2);
-        bot1.brain(bot3);
-        bot1.brain(bot4);
-
-        bot3.process();
-        bot4.process();
-        bot3.brain(bot4);
-        bot3.brain(bot2);
-        bot3.brain(bot1);
-
-        bot4.brain(bot3);
-        bot4.brain(bot2);
-        bot4.brain(bot1);
 
         bot1.updatecollisP();
         bot2.updatecollisP();
 
         bot1.collisdone(bot2);
-        bot1.collisdone(bot3);
-        bot1.collisdone(bot4);
-
         bot2.collisdone(bot1);
-        bot2.collisdone(bot3);
-        bot2.collisdone(bot4);
 
-        bot3.updatecollisP();
-        bot4.updatecollisP();
-        bot3.collisdone(bot1);
-        bot3.collisdone(bot4);
-        bot3.collisdone(bot2);
-
-        bot4.collisdone(bot1);
-        bot4.collisdone(bot3);
-        bot4.collisdone(bot2);
+        bot2.brain(bot1);
+        bot1.brain(bot2);
         
         BeginDrawing();
         ClearBackground(BLACK);
         bot1.draw();
         bot2.draw();
-        bot3.draw();
-        bot4.draw();
         EndDrawing();
         
         
