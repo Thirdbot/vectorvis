@@ -212,14 +212,14 @@ int main()
     InitWindow(width,height,"Window");
     SetConfigFlags(FLAG_VSYNC_HINT);
     SetTargetFPS(60);
-    /*
-    const int max_bot = 20;
+
+    const int max_bot = 1;
     Bot botlist[max_bot];
-    */
+
     BeginDrawing();
     ClearBackground(BLACK);
     
-    
+    /*
     Bot bot1;
     Bot bot2;
     bot1.setname("1");
@@ -229,29 +229,33 @@ int main()
     bot2.setradiant(10);
     bot2.setname("2");
     bot2.setspeed(5,5);
+    */
+    
     
     
     
     
     while (!WindowShouldClose())
     {
-    /*
     for (int i=0;i<max_bot;i++)
     {
         string name = "kai";
-        botlist[i].setspeed(1,1);
-        botlist[i].setname(name);
-        botlist[i].process();
-        botlist[i].brain(botlist[0]);
-        botlist[i].updatecollisP();
-        botlist[i].collisdone(botlist[i]);
-        botlist[i].draw();
+        
+        if(i < max_bot){
+            botlist[i].setspeed(1,1);
+            botlist[i].setname(name);
+            botlist[i].process();
+            botlist[i].updatecollisP();
+            botlist[i].collisdone(botlist[i]);
+            botlist[i].draw();
+        }
+            
+        
     }
     EndDrawing();
-    */  
         
         
-        
+        /*
         bot1.process();
         bot2.process();
 
@@ -270,6 +274,8 @@ int main()
         bot1.draw();
         bot2.draw();
         EndDrawing();
+        */
+        
         
         
         
