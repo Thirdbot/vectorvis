@@ -262,8 +262,8 @@ int main()
         bot1.collisdone(bot2);
         bot2.collisdone(bot1);
 
-        bot2.brain(bot1);
-        bot1.brain(bot2);
+        //bot2.brain(bot1);
+        //bot1.brain(bot2);
         
         BeginDrawing();
         ClearBackground(BLACK);
