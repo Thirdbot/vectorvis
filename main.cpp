@@ -20,6 +20,8 @@ mouse drag
 class Bot
 {
     public:
+    Color bcolor{255, 255, 255, 255};
+    Color lcolor{ 230, 41, 55, 255 };
     struct Circle
     {
         Vector2 center;
@@ -96,7 +98,7 @@ class Bot
     }
 
     //chat help
-    bool checkcollis(Bot& otherbot)
+    bool checkcollis(Bot& otherbot) const
     {
         return CheckCollisionCircles(collision.center,collision.radiant,otherbot.collision.center,otherbot.collision.radiant);
     }
@@ -144,8 +146,8 @@ class Bot
     {  
         cout << "Name:" << bname << "\tPosX:" << PositionOnScreen.x << "\tPosY:" << PositionOnScreen.y << endl;
         ClearBackground(BLACK);
-        DrawLineV(PositionOnScreen,Lastine,RED);
-        DrawCircleV(PositionOnScreen,radiant,WHITE);
+        DrawLineV(PositionOnScreen,Lastine,lcolor);
+        DrawCircleV(PositionOnScreen,radiant,bcolor);
     }
     void process()
     {
@@ -219,17 +221,20 @@ int main()
     BeginDrawing();
     ClearBackground(BLACK);
     
-    /*
+    
     Bot bot1;
     Bot bot2;
-    bot1.setname("1");
-    bot1.setradiant(10);
-    bot1.setspeed(5,5);
 
-    bot2.setradiant(10);
+    bot1.bcolor = {255, 255, 255, 255};
+    bot1.setname("1");
+    bot1.setradiant(50);
+    bot1.setspeed(10,10);
+
+    bot1.bcolor = {255, 109, 194, 255};
+    bot2.setradiant(50);
     bot2.setname("2");
-    bot2.setspeed(5,5);
-    */
+    bot2.setspeed(10,10);
+
     
     
     
@@ -237,25 +242,6 @@ int main()
     
     while (!WindowShouldClose())
     {
-    for (int i=0;i<max_bot;i++)
-    {
-        string name = "kai";
-        
-        if(i < max_bot){
-            botlist[i].setspeed(1,1);
-            botlist[i].setname(name);
-            botlist[i].process();
-            botlist[i].updatecollisP();
-            botlist[i].collisdone(botlist[i]);
-            botlist[i].draw();
-        }
-            
-        
-    }
-    EndDrawing();
-        
-        
-        /*
         bot1.process();
         bot2.process();
 
@@ -274,12 +260,7 @@ int main()
         bot1.draw();
         bot2.draw();
         EndDrawing();
-        */
-        
-        
-        
-        
-        
+
     }
     CloseWindow();
 
