@@ -240,6 +240,8 @@ int main()
     
     
     
+   /* This part of the code is the main game loop where the program continuously runs until the window
+   is closed. Here's a breakdown of what happens inside the loop: */
     while (!WindowShouldClose())
     {
         bot1.process();
@@ -252,8 +254,8 @@ int main()
         bot1.collisdone(bot2);
         bot2.collisdone(bot1);
 
-        //bot2.brain(bot1);
-        //bot1.brain(bot2);
+        bot2.brain(bot1);
+        bot1.brain(bot2);
         
         BeginDrawing();
         ClearBackground(BLACK);
